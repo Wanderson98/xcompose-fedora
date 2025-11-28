@@ -110,3 +110,54 @@ Para que as alterações nos arquivos /etc/environment e ~/.profile sejam aplica
 ```bash
 reboot
 ```
+
+# 🗑️ Como Desfazer as Alterações (Rollback)
+
+Este guia explica como usar o script `uninstall.sh` para reverter todas as configurações feitas pelo script `install.sh` no seu sistema, restaurando os arquivos originais.
+
+---
+
+## 🛑 O Que o Script `uninstall.sh` Faz?
+
+O script de desinstalação garante uma reversão limpa e segura, utilizando os arquivos de *backup* criados durante a instalação.
+
+1.  **Restauração de Arquivos:** Restaura os arquivos originais (deletando o conteúdo modificado) dos backups (`.bak`):
+    * `/etc/environment`
+    * `~/.profile`
+    * `~/.XCompose` (se um backup original existia).
+2.  **Limpeza:** Remove permanentemente todos os arquivos de *backup* (`.bak`) após a restauração.
+3.  **Remoção de Arquivo Customizado:** Se nenhum backup original de `.XCompose` existia, ele remove o arquivo `.XCompose` customizado que foi copiado para a sua `$HOME`.
+
+---
+
+## ⚙️ Passo a Passo para a Reversão
+
+Para executar o script de desinstalação, certifique-se de estar no diretório do projeto (`xcompose-fedora`).
+
+### 1. Acessar o Diretório do Projeto
+
+Se você não estiver no diretório onde o `uninstall.sh` está salvo, navegue até ele e abra uma janela do terminal:
+
+2. Dar Permissão de Execução ao Script
+
+Garanta que o script possa ser executado.
+
+```bash
+chmod +x uninstall.sh
+```
+
+3. Executar o Script de Desinstalação
+
+Execute o script. Ele pedirá sua senha de sudo para restaurar o arquivo /etc/environment.
+
+```bash
+./uninstall.sh
+```
+
+4. Reiniciar o Sistema (Obrigatório)
+
+Assim como na instalação, você deve reiniciar a sessão ou o computador para que o sistema carregue novamente os arquivos de configuração originais, sem as variáveis do XIM.
+
+```bash
+reboot
+```
